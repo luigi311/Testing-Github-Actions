@@ -1,0 +1,20 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+   
+    steps:
+      - name: "Step 1"
+        run: |
+          mkdir -p $home/another_dir
+          cd $home/another_dir
+          pwd
+          export VAR1="$(pwd)"
+    
+      - name: "Step 2"
+        run: |
+          pwd
+          cd ${VAR1}
+          pwd
