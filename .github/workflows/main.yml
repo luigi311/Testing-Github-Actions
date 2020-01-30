@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: "Step 1"
         run: |
-          mkdir -p $home/another_dir
-          cd $home/another_dir
+          mkdir -p $HOME/another_dir
+          cd $HOME/another_dir
           pwd
           export VAR1="$(pwd)"
     
