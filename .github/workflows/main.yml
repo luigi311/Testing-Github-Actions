@@ -41,3 +41,6 @@ jobs:
       - name: "Base script file"
         run: |
            $GITHUB_WORKSPACE/.github/workflows/base_script.sh
+           mkdir -p $GITHUB_WORKSPACE/Build/Linux/
+           cd $GITHUB_WORKSPACE/Build/Linux/
+           $GITHUB_WORKSPACE/.github/workflows/base_script.sh
