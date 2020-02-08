@@ -27,3 +27,6 @@ jobs:
       - name: "Base script"
         run: |
           eval "$base_script"
+          mkdir -p $GITHUB_WORKSPACE/Build/linux/
+          cd $GITHUB_WORKSPACE/Build/linux/
+          eval "$base_script"
