@@ -1,10 +1,11 @@
 name: CI
 on: [push, pull_request]
 env:
-  echoing: 'testing'
   base_script: |
-    ls
-    find . -name "*.yml"
+    pwd
+    cd $HOME/another_dir
+    pwd
+
 jobs:
   build:
     runs-on: ubuntu-18.04
