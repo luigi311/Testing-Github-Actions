@@ -2,8 +2,8 @@ name: CI
 on: [push, pull_request]
 env:
   base_script: |
-    'echo "testing" \
-    echo "testing2"'
+    "echo 'testing'
+     echo 'testing2'"
 jobs:
   build:
     runs-on: ubuntu-18.04
