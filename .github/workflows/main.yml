@@ -24,4 +24,4 @@ jobs:
 
       - name: "Base script"
         run: |
-          eval $base_script
+          eval "$base_script"
