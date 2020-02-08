@@ -1,5 +1,10 @@
 name: CI
 on: [push, pull_request]
+env:
+  base_script: |
+    pwd
+    cd $HOME/another_dir
+    pwd
 
 jobs:
   build:
@@ -18,3 +23,7 @@ jobs:
           pwd
           cd ${VAR1}
           pwd
+
+      - name: "Base script"
+        run: |
+          eval "$base_script"
