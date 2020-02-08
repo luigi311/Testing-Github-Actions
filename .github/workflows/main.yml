@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
+ 
+      - name: "Permissions"
+        run: |
+          chmod +x $GITHUB_WORKSPACE/.github/workflows/base_script.sh
+
       - name: "Step 1"
         run: |
           mkdir -p $HOME/another_dir
