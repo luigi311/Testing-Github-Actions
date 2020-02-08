@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 env:
   echoing: 'testing'
-  base_script: >
+  base_script: >-
     'echo "testing"
      echo "testing2"'
 jobs:
