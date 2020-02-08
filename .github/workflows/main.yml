@@ -22,4 +22,4 @@ jobs:
 
       - name: "Base script"
         run: |
-          ${ base_script }
+          eval ${ base_script }
