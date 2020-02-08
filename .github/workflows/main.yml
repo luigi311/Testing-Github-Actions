@@ -3,7 +3,7 @@ on: [push, pull_request]
 env:
   echoing: 'testing'
   base_script: >-
-    echo "testing"
+    echo "testing" &&
     echo "testing2"
 jobs:
   build:
