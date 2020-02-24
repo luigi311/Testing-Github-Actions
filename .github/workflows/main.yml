@@ -48,7 +48,7 @@ jobs:
       - name: Prepare cache hash
         id: cache_hash
         run: |
-          echo "::set-output name=hash::${{ hashFiles('**/*.md') }}"
+          echo "::set-output name=hash::${{ hashFiles('**/*.yml') }}"
 
       - name: ccache cache files
         uses: actions/cache@v1.1.0
