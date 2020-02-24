@@ -54,6 +54,6 @@ jobs:
         uses: actions/cache@v1.1.0
         with:
           path: .
-          key: cache-${{ hash }}
+          key: cache-${hash}
           restore-keys: |
             cache-
