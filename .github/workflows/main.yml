@@ -63,7 +63,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "value1" > value1.txt
-          echo "value1" > value2.txt
+          echo "value2" > value2.txt
           diff value1.txt value2.txt
           echo ::set-output name=status::success
 
