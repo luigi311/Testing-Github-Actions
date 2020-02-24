@@ -69,7 +69,7 @@ jobs:
 
       - name: Create artifact
         if: steps.failure_test.outputs.status != 'success'
-        run: tar czf ./value.tar.gz value*
+        run: tar cf ./value.tar.gz value*
         
       - name: On fail, upload artifact SVT-AV1 (master)
         if: steps.failure_test.outputs.status != 'success'
