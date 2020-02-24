@@ -48,7 +48,7 @@ jobs:
       - name: Prepare cache hash
         id: cache_hash
         run: |
-          echo "::set-env name=hash::${{ hashFiles('**/*') }}"
+          echo "::set-env name=hash::${{ hashFiles('**/*.md') }}"
 
       - name: ccache cache files
         uses: actions/cache@v1.1.0
