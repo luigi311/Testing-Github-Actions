@@ -45,15 +45,15 @@ jobs:
            cd $GITHUB_WORKSPACE/Build/Linux/
            $GITHUB_WORKSPACE/.github/workflows/base_script.sh
 
-      - name: Prepare ccache timestamp
-        id: ccache_cache_timestamp
+      - name: Prepare cache hash
+        id: cache_hash
         run: |
-          echo "::set-output name=timestamp::${{ hashFiles('**/*') }}"
+          echo "::set-output name=hash::${{ hashFiles('**/*') }}"
 
       - name: ccache cache files
         uses: actions/cache@v1.1.0
         with:
-          path: .ccache
-          key: ${ { matrix.config.name } }-ccache-${ { steps.ccache_cache_timestamp.outputs.timestamp } }
+          path: .
+          key: cache-${ { steps.cache_hash.outputs.hash } }
           restore-keys: |
-            ${ { matrix.config.name } }-ccache-
+            cache-
