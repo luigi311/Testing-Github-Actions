@@ -57,3 +57,10 @@ jobs:
           key: cache-${{ steps.cache_hash.outputs.hash }}
           restore-keys: |
             cache-
+            
+      - name: This will fail
+        id: failure_test
+        run: |
+          echo "value1" >> value1.txt
+          echo "value2" >> value2.txt
+          diff value1.txt value2.txt
