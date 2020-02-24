@@ -44,3 +44,16 @@ jobs:
            mkdir -p $GITHUB_WORKSPACE/Build/Linux/
            cd $GITHUB_WORKSPACE/Build/Linux/
            $GITHUB_WORKSPACE/.github/workflows/base_script.sh
+      - name: Prepare cache hash
+        id: cache_hash
+        run: |
+          string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+          message("::set-output name=timestamp::${current_date}")
+          
+      - name: Cache ccache files
+        uses: actions/cache@v1.1.0
+        with:
+          path: ~/.ccache
+          key: ${{ runner.os }}-binary-test-${{ steps.cache_hash.outputs.timestamp  }}
+          restore-keys: |
+            ${{ runner.os }}-binary-test-
