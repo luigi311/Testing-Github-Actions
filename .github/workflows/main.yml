@@ -65,13 +65,14 @@ jobs:
           echo "value1" >> value1.txt
           echo "value2" >> value2.txt
           diff value1.txt value2.txt
+          run: echo ::set-output name=status::success
 
       - name: Create artifact
-        if: job.steps.failure_test.status == 'failure'
+        if: steps.failure_test.outputs.status != 'success'
         run: tar czf ./value.tar.gz value*
         
       - name: On fail, upload artifact SVT-AV1 (master)
-        if: job.steps.failure_test.status == 'failure'
+        if: steps.failure_test.outputs.status != 'success'
         uses: actions/upload-artifact@v1
         with:
           name: value
