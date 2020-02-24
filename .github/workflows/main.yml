@@ -65,7 +65,7 @@ jobs:
           echo "value1" >> value1.txt
           echo "value1" >> value2.txt
           diff value1.txt value2.txt
-          run: echo ::set-output name=status::success
+          echo ::set-output name=status::success
 
       - name: Create artifact
         if: steps.failure_test.outputs.status != 'success'
