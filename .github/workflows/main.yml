@@ -44,3 +44,16 @@ jobs:
            mkdir -p $GITHUB_WORKSPACE/Build/Linux/
            cd $GITHUB_WORKSPACE/Build/Linux/
            $GITHUB_WORKSPACE/.github/workflows/base_script.sh
+
+      - name: Prepare cache hash
+        id: cache_hash
+        run: |
+          echo "::set-output name=hash::${{ hashFiles('**/*.yml') }}"
+
+      - name: ccache cache files
+        uses: actions/cache@v1.1.0
+        with:
+          path: .
+          key: cache-${{ steps.cache_hash.outputs.hash }}
+          restore-keys: |
+            cache-
