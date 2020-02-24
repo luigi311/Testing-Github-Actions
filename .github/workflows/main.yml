@@ -48,12 +48,12 @@ jobs:
       - name: Prepare cache hash
         id: cache_hash
         run: |
-          echo "::set-env name=hash::${{ hashFiles('**/*.md') }}"
+          echo "::set-output name=hash::${{ hashFiles('**/*.md') }}"
 
       - name: ccache cache files
         uses: actions/cache@v1.1.0
         with:
           path: .
-          key: cache-${hash}
+          key: cache-${{ steps.cache_hash.outputs.hash }}
           restore-keys: |
             cache-
