@@ -60,7 +60,19 @@ jobs:
             
       - name: This will fail
         id: failure_test
+        continue-on-error: true
         run: |
           echo "value1" >> value1.txt
           echo "value2" >> value2.txt
           diff value1.txt value2.txt
+
+      - name: Create artifact
+        if: job.steps.failure_test.status == failure
+        run: tar czf ./value.tar.gz value*
+        
+      - name: On fail, upload artifact SVT-AV1 (master)
+        if: job.steps.failure_test.status == failure
+        uses: actions/upload-artifact@v1
+        with:
+          name: value
+          path: ./value.tar.gz
