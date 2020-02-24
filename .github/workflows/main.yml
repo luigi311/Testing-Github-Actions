@@ -11,6 +11,13 @@ jobs:
     runs-on: ubuntu-18.04
    
     steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+ 
+      - name: "Permissions"
+        run: |
+          chmod +x $GITHUB_WORKSPACE/.github/workflows/base_script.sh
+
       - name: "Step 1"
         run: |
           mkdir -p $HOME/another_dir
@@ -18,12 +25,22 @@ jobs:
           pwd
           export VAR1="$(pwd)"
     
-      - name: "Step 2"
+      - name: "Using variable from last step"
         run: |
           pwd
           cd ${VAR1}
           pwd
 
-      - name: "Base script"
+      - name: "Base script env"
         run: |
           eval "$base_script"
+          mkdir -p $GITHUB_WORKSPACE/Build/linux/
+          cd $GITHUB_WORKSPACE/Build/linux/
+          eval "$base_script"
+
+      - name: "Base script file"
+        run: |
+           $GITHUB_WORKSPACE/.github/workflows/base_script.sh
+           mkdir -p $GITHUB_WORKSPACE/Build/Linux/
+           cd $GITHUB_WORKSPACE/Build/Linux/
+           $GITHUB_WORKSPACE/.github/workflows/base_script.sh
