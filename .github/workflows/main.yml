@@ -68,7 +68,7 @@ jobs:
           echo ::set-output name=status::success
 
       - name: Create artifact
-        if: steps.failure_test.outputs.status != 'success'
+        if: failure()
         run: tar cf ./value.tar.gz value*
         
       - name: On fail, upload artifact SVT-AV1 (master)
