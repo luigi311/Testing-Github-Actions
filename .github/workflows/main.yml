@@ -72,7 +72,7 @@ jobs:
         run: tar cf ./value.tar.gz value*
         
       - name: On fail, upload artifact SVT-AV1 (master)
-        if: steps.failure_test.outputs.status != 'success'
+        if: failure()
         uses: actions/upload-artifact@v1
         with:
           name: value
