@@ -57,3 +57,23 @@ jobs:
           key: cache-${{ steps.cache_hash.outputs.hash }}
           restore-keys: |
             cache-
+            
+      - name: This will fail
+        id: failure_test
+        continue-on-error: true
+        run: |
+          echo "value1" > value1.txt
+          echo "value2" > value2.txt
+          diff value1.txt value2.txt
+          echo ::set-output name=status::success
+
+      - name: Create artifact
+        if: steps.failure_test.outputs.status != 'success'
+        run: tar cf ./value.tar.gz value*
+        
+      - name: On fail, upload artifact SVT-AV1 (master)
+        if: steps.failure_test.outputs.status != 'success'
+        uses: actions/upload-artifact@v1
+        with:
+          name: value
+          path: ./value.tar.gz
