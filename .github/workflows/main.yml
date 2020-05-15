@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set ccache
-        run: eval ${{ set_ccache }}
+        run: eval ${{ env.set_ccache }}
 
       - name: "Permissions"
         run: |
@@ -110,7 +110,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set ccache
-        run: eval ${{ set_ccache }}
+        run: eval ${{ env.set_ccache }}
 
       - name: Install dependencies
         run: |
