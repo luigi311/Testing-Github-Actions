@@ -90,8 +90,8 @@ jobs:
           pwd
           echo "${{ env.CCACHE_DIR }}" > ccache.txt
 
-      - name: On fail, upload artifact
+      - name: Upload ccache
         uses: actions/upload-artifact@v1
         with:
           name: ccache
-          path: $HOME/ccache.txt
+          path: ./ccache.txt
