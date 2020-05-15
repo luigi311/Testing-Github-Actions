@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 env:
   CCACHE_DIR: $HOME/.ccache
-  TEE_DIR: $HOME/test
+  TEE_DIR: ~/test
   base_script: |
     pwd
     cd $HOME/another_dir
