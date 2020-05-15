@@ -82,15 +82,9 @@ jobs:
       - name: ccache variable
         run: |
           sudo mkdir -p ${{ env.CCACHE_DIR }}
-          ls -l ${{ env.CCACHE_DIR }} > $HOME/ls.txt
+          ls -l $HOME
           sudo chown -R "$USER": ${{ env.CCACHE_DIR }}
-          ls -l ${{ env.CCACHE_DIR }} >> $HOME/ls.txt
-          tar cf $HOME/ls.txt
+          ls -l $HOME
           pwd
           cd ${{ env.CCACHE_DIR }}
           pwd
-      - name: Upload ls artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: ls
-          path: $HOME/ls.txt
