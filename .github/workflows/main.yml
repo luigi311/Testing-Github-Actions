@@ -85,3 +85,4 @@ jobs:
           sudo chown -R "$USER": ${{ env.CCACHE_DIR }}
           ls -l ${{ env.CCACHE_DIR }}
           cd ${{ env.CCACHE_DIR }}
+          pwd
