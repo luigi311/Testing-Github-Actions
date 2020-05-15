@@ -1,7 +1,7 @@
 name: CI
 on: [push, pull_request]
 env:
-  CCACHE_DIR: /home/runner/.ccache
+  CCACHE_DIR: $HOME/.ccache
   base_script: |
     pwd
     cd $HOME/another_dir
@@ -82,9 +82,9 @@ jobs:
       - name: ccache variable
         run: |
           sudo mkdir -p ${{ env.CCACHE_DIR }}
-          ls -l $HOME
+          ls -al $HOME
           sudo chown -R "$USER": ${{ env.CCACHE_DIR }}
-          ls -l $HOME
+          ls -al $HOME
           pwd
           cd ${{ env.CCACHE_DIR }}
           pwd
