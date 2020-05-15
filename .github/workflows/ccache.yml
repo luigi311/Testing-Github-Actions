@@ -26,3 +26,4 @@ jobs:
           echo ${{ env.sample_c }} >> temp.c
           sudo -E /usr/lib/ccache/gcc ./temp.c
           sudo -E ccache -s
+          ls -la $HOME
