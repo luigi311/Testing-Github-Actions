@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 env:
   CCACHE_DIR: $HOME/.ccache
-  TEE_TEST: $HOME/test
+  TEE_dir: $HOME/test
   base_script: |
     pwd
     cd $HOME/another_dir
@@ -82,6 +82,7 @@ jobs:
       
       - name: ccache variable
         run: |
+          echo "${{ env.CCACHE_DIR }}" > ccache.txt
           sudo mkdir -p ${{ env.CCACHE_DIR }}
           ls -al $HOME
           sudo chown -R "$USER": ${{ env.CCACHE_DIR }}
@@ -89,12 +90,12 @@ jobs:
           pwd
           cd ${{ env.CCACHE_DIR }}
           pwd
-          echo "${{ env.CCACHE_DIR }}" > ccache.txt
 
       - name: tee test
         run: |
           echo 1 | sudo tee -a ${{ env.TEE_DIR }}
           ls -l $HOME
+          
       - name: Upload ccache
         uses: actions/upload-artifact@v1
         with:
