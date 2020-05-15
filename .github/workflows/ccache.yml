@@ -3,10 +3,10 @@ on: [push, pull_request]
 env:
   CCACHE_DIR: $HOME/.ccache
   sample_c: |
-    "#include <stdio.h>
+    #include <stdio.h>
     int main(void) {
       printf("Joker is geh\n");
-    }"
+    }
 
 jobs:
   ccache:
