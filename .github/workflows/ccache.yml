@@ -2,11 +2,6 @@ name: CI
 on: [push, pull_request]
 env:
   CCACHE_DIR: $HOME/.ccache
-  sample_c: |
-    #include <stdio.h>
-    int main(void) {
-      printf("Joker is geh\n");
-    }
 
 jobs:
   ccache:
@@ -23,7 +18,6 @@ jobs:
 
       - name: "CCACHE TEST"
         run: |
-          echo ${{ env.sample_c }} >> temp.c
-          sudo -E /usr/lib/ccache/gcc ./temp.c
+          sudo -E /usr/lib/ccache/gcc .github/workflows/test.c
           sudo -E ccache -s
           ls -la $HOME
