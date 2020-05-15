@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 env:
   CCACHE_DIR: $HOME/.ccache
-  TEE_dir: $HOME/test
+  TEE_DIR: $HOME/test
   base_script: |
     pwd
     cd $HOME/another_dir
@@ -100,4 +100,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: ccache
-          path: ~/ccache.txt
+          path: ./ccache.txt
