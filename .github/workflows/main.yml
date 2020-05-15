@@ -7,6 +7,12 @@ env:
     cd $HOME/another_dir
     pwd
 
+defaults:
+  run: |
+    echo "::set-env name=CCACHE_DIR::$HOME/.ccache"
+    
+  
+
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -78,9 +84,7 @@ jobs:
         with:
           name: value
           path: ./value.tar.gz
-      - name: Set CCACHE_DIR
-        run: |
-          echo "::set-env name=CCACHE_DIR::$HOME/.ccache"
+          
       - name: ccache variable
         run: |
           echo "$CCACHE_DIR" > ccache.txt
@@ -99,7 +103,7 @@ jobs:
 
   ccache:
     runs-on: ubuntu-18.04
-   
+
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
