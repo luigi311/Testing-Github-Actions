@@ -21,3 +21,4 @@ jobs:
           sudo -E /usr/lib/ccache/gcc .github/workflows/test.c
           sudo -E ccache -s
           ls -la $HOME
+          ls -la ~
