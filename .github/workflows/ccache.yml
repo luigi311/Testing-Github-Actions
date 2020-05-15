@@ -1,7 +1,7 @@
 name: CI
 on: [push, pull_request]
 env:
-  CCACHE_DIR: $HOME/.ccache
+  CCACHE_DIR: /home/runner/.ccache
 
 jobs:
   ccache:
