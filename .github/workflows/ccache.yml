@@ -7,6 +7,7 @@ env:
     int main(void) {
       printf("Joker is geh\n");
     }"
+
 jobs:
   ccache:
     runs-on: ubuntu-18.04
