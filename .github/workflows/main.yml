@@ -82,6 +82,6 @@ jobs:
       - name: ccache variable
         run: |
           sudo mkdir -p ${{ env.CCACHE_DIR }}
-          sudo chown -R "$USER": {{ env.CCACHE_DIR }}
-          ls -l {{ env.CCACHE_DIR }}
-          cd {{ env.CCACHE_DIR }}
+          sudo chown -R "$USER": ${{ env.CCACHE_DIR }}
+          ls -l ${{ env.CCACHE_DIR }}
+          cd ${{ env.CCACHE_DIR }}
