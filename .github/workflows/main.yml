@@ -1,6 +1,7 @@
 name: CI
 on: [push, pull_request]
 env:
+  CCACHE_DIR: $HOME/.ccache
   base_script: |
     pwd
     cd $HOME/another_dir
@@ -58,7 +59,7 @@ jobs:
           restore-keys: |
             cache-
             
-      - name: This will fail
+      - name: This should fail
         id: failure_test
         continue-on-error: true
         run: |
@@ -77,3 +78,10 @@ jobs:
         with:
           name: value
           path: ./value.tar.gz
+      
+      - name: ccache variable
+        run: |
+          sudo mkdir -p ${{ env.CCACHE_DIR }}
+          sudo chown -R "$USER": {{ env.CCACHE_DIR }}
+          ls -l {{ env.CCACHE_DIR }}
+          cd {{ env.CCACHE_DIR }}
