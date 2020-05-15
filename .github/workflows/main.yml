@@ -88,7 +88,7 @@ jobs:
           pwd
           cd ${{ env.CCACHE_DIR }}
           pwd
-          echo "${{ env.CCACHE_DIR }} > ccache.txt
+          echo "${{ env.CCACHE_DIR }}" > ccache.txt
 
       - name: On fail, upload artifact
         uses: actions/upload-artifact@v1
