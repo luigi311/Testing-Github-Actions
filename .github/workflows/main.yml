@@ -150,7 +150,7 @@ jobs:
           restore-keys: videos-
       
       - name: Download videos
-        run: eval "${{ env.download_videos }}"
+        run: bash -c "${{ env.download_videos }}"
           
   
   test-videos:
@@ -171,7 +171,7 @@ jobs:
       
       - name: Download videos if cache does not exist
         if: steps.cache-videos.outputs.cache-hit != 'true'
-        run: eval "${{ env.download_videos }}"
+        run: bash -c "${{ env.download_videos }}"
       
       - name: Check videos
         run: |
