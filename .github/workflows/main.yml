@@ -1,12 +1,15 @@
 name: CI
 on: [push, pull_request]
 env:
-  CCACHE_DIR: $HOME/.ccache
   TEE_DIR: ~/test
   base_script: |
     pwd
     cd $HOME/another_dir
     pwd
+  set_ccache: |
+    echo "::set-env name=CCACHE_DIR::$HOME/.ccache"
+    
+  
 
 jobs:
   build:
@@ -15,11 +18,14 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
- 
+
+      - name: Set ccache
+        run: eval ${{ env.set_ccache }}
+
       - name: "Permissions"
         run: |
           chmod +x $GITHUB_WORKSPACE/.github/workflows/base_script.sh
-
+          
       - name: "Step 1"
         run: |
           mkdir -p $HOME/another_dir
@@ -78,20 +84,48 @@ jobs:
         with:
           name: value
           path: ./value.tar.gz
-      
+          
       - name: ccache variable
         run: |
-          echo "${{ env.CCACHE_DIR }}" > ccache.txt
-          sudo mkdir -p ${{ env.CCACHE_DIR }}
+          echo "$CCACHE_DIR" > ccache.txt
+          sudo mkdir -p $CCACHE_DIR
           ls -al $HOME
-          sudo chown -R "$USER": ${{ env.CCACHE_DIR }}
+          sudo chown -R "$USER": $CCACHE_DIR
           ls -al $HOME
           pwd
-          cd ${{ env.CCACHE_DIR }}
+          cd $CCACHE_DIR
           pwd
 
       - name: tee test
         run: |
           echo 1 | sudo tee -a ${{ env.TEE_DIR }}
           ls -l $HOME
+
+  ccache:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: Set ccache
+        run: eval ${{ env.set_ccache }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install ccache gcc
+    
+      - name: "CCACHE TEST"
+        run: |
+          sudo -E /usr/lib/ccache/gcc .github/workflows/test.c
+          sudo -E ccache -s
+          ls -la $HOME
+          ls -la
+          ls -la ~
           
+      - name: Check ccache_dir
+        run: |
+          cd $CCACHE_DIR
+          pwd
+          ls -a

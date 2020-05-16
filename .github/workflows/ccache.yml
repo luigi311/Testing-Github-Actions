@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+env:
+  CCACHE_DIR: /home/runner/.ccache
+
+jobs:
+  ccache:
+    runs-on: ubuntu-18.04
+   
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install ccache gcc
+
+      - name: "CCACHE TEST"
+        run: |
+          sudo -E /usr/lib/ccache/gcc .github/workflows/test.c
+          sudo -E ccache -s
+          ls -la $HOME
+          ls -la
+          ls -la ~
