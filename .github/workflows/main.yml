@@ -9,11 +9,6 @@ env:
     pwd
   set_ccache: |
     echo "::set-env name=CCACHE_DIR::$HOME/.ccache"
-  download_videos: |
-    for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
-      curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
-    done
-    tar -xf videos/video.tar.gz -C videos
   
 
 jobs:
