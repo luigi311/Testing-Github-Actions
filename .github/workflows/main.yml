@@ -1,5 +1,6 @@
 name: CI
 on: [push, pull_request]
+
 env:
   TEE_DIR: ~/test
   base_script: |
@@ -13,7 +14,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
    
     steps:
       - name: "Checkout"
@@ -102,7 +103,7 @@ jobs:
           ls -l $HOME
 
   ccache:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout"
@@ -129,3 +130,44 @@ jobs:
           cd $CCACHE_DIR
           pwd
           ls -a
+          
+  videos:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      
+      - name: Cache videos
+        uses: actions/cache@v1
+        with:
+          path: videos
+          key: videos-${{ hashFiles('**/*.y4m') }}
+          restore-keys: videos-
+      
+      - name: Download videos
+        run: |
+          for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
+            curl -Lo videos/video.tar.gz https://$url/video.tar.gz && break
+          done
+          tar -xf videos/video.tar.gz -C videos
+  
+  test-videos:
+    runs-on: ubuntu-latest
+    needs: videos
+    
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      
+      - name: Cache videos
+        uses: actions/cache@v1
+        with:
+          path: videos
+          key: videos-${{ hashFiles('**/*.y4m') }}
+          restore-keys: videos-
+      
+      - name: Check videos
+        run: |
+          ls -l videos/
+          du -h videos/*.y4m
