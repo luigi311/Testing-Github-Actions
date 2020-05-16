@@ -162,6 +162,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Cache videos
+        id: cache-videos
         uses: actions/cache@v1
         with:
           path: videos
@@ -169,7 +170,7 @@ jobs:
           restore-keys: videos-
       
       - name: Download videos if cache does not exist
-        if: steps.cache-primes.outputs.cache-hit != 'true'
+        if: steps.cache-videos.outputs.cache-hit != 'true'
         run: eval "${{ env.download_videos }}"
       
       - name: Check videos
