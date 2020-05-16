@@ -148,7 +148,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos-${{ hashFiles('videos/video.tar.gz') }}
+          key: videos2-${{ hashFiles('videos/video.tar.gz') }}
   
   test-videos:
     runs-on: ubuntu-latest
@@ -163,8 +163,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos-${{ hashFiles('videos/video.tar.gz') }}
-          restore-keys: videos-
+          key: videos2-${{ hashFiles('videos/video.tar.gz') }}
+          restore-keys: videos2-
       
       - name: Download videos if cache does not exist
         if: steps.cache-videos.outputs.cache-hit != 'true'
