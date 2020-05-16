@@ -169,7 +169,7 @@ jobs:
       - run: "[ -d videos ] && echo ::set-env name=exist::True"
 
       - name: Download videos if cache does not exist
-        if: $exist != 'True'
+        if: env.exist != 'True'
         run: |
           for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
             curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
