@@ -148,7 +148,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos2-${{ hashFiles('videos/video.tar.gz') }}
+          key: videos3-${{ hashFiles('videos/video.tar.gz') }}
   
   test-videos:
     runs-on: ubuntu-latest
@@ -166,18 +166,13 @@ jobs:
           key: videos3-${{ hashFiles('videos/video.tar.gz') }}
           restore-keys: videos3-
       
-      - name: Echo cache-hit
+      - name: Download videos if cache does not exist
+        if: bash -c '[ -d "videos" ]' != 'true'
         run: |
-          echo ${{ steps.cache-videos }}
-          echo ${{ steps.cache-videos.output }}
-      
-      #- name: Download videos if cache does not exist
-      #  if: steps.cache-videos.outputs.cache-hit != 'true'
-      #  run: |
-      #    for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
-      #      curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
-      #    done
-      #    tar -xf videos/video.tar.gz -C videos
+          for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
+            curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
+          done
+          tar -xf videos/video.tar.gz -C videos
       
       - name: Check videos
         run: |
