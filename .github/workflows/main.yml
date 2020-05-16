@@ -142,7 +142,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos-${{ hashFiles('**/*.y4m') }}
+          key: videos-${{ hashFiles('videos/video.tar.gz') }}
           restore-keys: videos-
       
       - name: Download videos
@@ -164,7 +164,6 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos-${{ hashFiles('**/*.y4m') }}
           restore-keys: videos-
       
       - name: Check videos
