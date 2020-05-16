@@ -166,6 +166,10 @@ jobs:
           key: videos2-${{ hashFiles('videos/video.tar.gz') }}
           restore-keys: videos2-
       
+      - name: Echo cache-hit
+        run: |
+          echo ${{ steps.cache-videos.outputs.cache-hit }}
+      
       - name: Download videos if cache does not exist
         if: steps.cache-videos.outputs.cache-hit != 'true'
         run: |
