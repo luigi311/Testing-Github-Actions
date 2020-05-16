@@ -148,7 +148,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos3-${{ hashFiles('videos/video.tar.gz') }}
+          key: videos4-${{ hashFiles('videos/video.tar.gz') }}
   
   test-videos:
     runs-on: ubuntu-latest
@@ -163,11 +163,13 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
-          key: videos3-${{ hashFiles('videos/video.tar.gz') }}
-          restore-keys: videos3-
+          key: videos4-${{ hashFiles('videos/video.tar.gz') }}
+          restore-keys: videos4-
       
+      - run: "[ -d videos ] && echo ::set-env name=exist::True"
+
       - name: Download videos if cache does not exist
-        if: bash -c '[ -d "videos" ]' != 'true'
+        if: $exist != 'True'
         run: |
           for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
             curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
