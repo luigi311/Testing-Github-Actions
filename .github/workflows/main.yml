@@ -1,5 +1,6 @@
 name: CI
 on: [push, pull_request]
+
 env:
   TEE_DIR: ~/test
   base_script: |
@@ -8,12 +9,11 @@ env:
     pwd
   set_ccache: |
     echo "::set-env name=CCACHE_DIR::$HOME/.ccache"
-    
   
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
    
     steps:
       - name: "Checkout"
@@ -102,7 +102,7 @@ jobs:
           ls -l $HOME
 
   ccache:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout"
@@ -129,3 +129,54 @@ jobs:
           cd $CCACHE_DIR
           pwd
           ls -a
+          
+  videos:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      
+      - name: Download videos
+        run: |
+          for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
+            curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
+          done
+          tar -xf videos/video.tar.gz -C videos
+        
+      - name: Cache videos
+        uses: actions/cache@v1
+        with:
+          path: videos
+          key: videos4-${{ hashFiles('videos/video.tar.gz') }}
+  
+  test-videos:
+    runs-on: ubuntu-latest
+    needs: videos
+    
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      
+      - name: Cache videos
+        id: cache-videos
+        uses: actions/cache@v1
+        with:
+          path: videos
+          key: videos4-${{ hashFiles('videos/video.tar.gz') }}
+          restore-keys: videos4-
+      
+      - run: "[ -d videos ] && echo ::set-env name=exist::True"
+
+      - name: Download videos if cache does not exist
+        if: env.exist != 'True'
+        run: |
+          for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
+            curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
+          done
+          tar -xf videos/video.tar.gz -C videos
+      
+      - name: Check videos
+        run: |
+          ls -l videos/
+          du -h videos/*.y4m
