@@ -9,7 +9,11 @@ env:
     pwd
   set_ccache: |
     echo "::set-env name=CCACHE_DIR::$HOME/.ccache"
-    
+  download_videos: |
+    for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
+      curl --create-dirs -Lo videos/video.tar.gz https://$url/video.tar.gz && break
+    done
+    tar -xf videos/video.tar.gz -C videos
   
 
 jobs:
@@ -146,11 +150,8 @@ jobs:
           restore-keys: videos-
       
       - name: Download videos
-        run: |
-          for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
-            curl --create-dirs -Lo videos/video.tar.gz https://$url/video.tar.gz && break
-          done
-          tar -xf videos/video.tar.gz -C videos
+        run: eval "${{ env.download_videos }}"
+          
   
   test-videos:
     runs-on: ubuntu-latest
@@ -164,7 +165,12 @@ jobs:
         uses: actions/cache@v1
         with:
           path: videos
+          key: videos-${{ hashFiles('videos/video.tar.gz') }}
           restore-keys: videos-
+      
+      - name: Download videos if cache does not exist
+        if: steps.cache-primes.outputs.cache-hit != 'true'
+        run: eval "${{ env.download_videos }}"
       
       - name: Check videos
         run: |
