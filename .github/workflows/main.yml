@@ -152,7 +152,7 @@ jobs:
       - name: Cache videos
         uses: actions/cache@v2
         with:
-          path: *.y4m
+          path: "*.y4m"
           key: videos5-${{ env.HASH }}
   
   test-videos:
@@ -167,7 +167,7 @@ jobs:
         id: cache-videos
         uses: actions/cache@v2
         with:
-          path: *.y4m
+          path: "*.y4m"
           key: videos5-${{ env.HASH }}
       
       - run: "[ -d videos ] && echo ::set-env name=exist::True"
