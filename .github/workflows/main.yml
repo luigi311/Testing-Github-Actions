@@ -140,15 +140,20 @@ jobs:
       - name: Download videos
         run: |
           for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
-            curl -Lo videos/video.tar.gz https://$url/video.tar.gz --create-dirs && break
+            curl -Lo video.tar.gz https://$url/video.tar.gz && break
           done
-          tar -xf videos/video.tar.gz -C videos
+          tar -xf videos/video.tar.gz
         
+      - name: Hash video.tar.gz
+        run: |
+          echo "::set-env name=HASH::${{ hashFiles('videos/video.tar.gz') }}"
+          echo ${{ env.HASH }}
+     
       - name: Cache videos
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-          path: videos
-          key: videos4-${{ hashFiles('videos/video.tar.gz') }}
+          path: *.y4m
+          key: videos5-${{ env.HASH }}
   
   test-videos:
     runs-on: ubuntu-latest
@@ -160,11 +165,10 @@ jobs:
       
       - name: Cache videos
         id: cache-videos
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-          path: videos
-          key: videos4-${{ hashFiles('videos/video.tar.gz') }}
-          restore-keys: videos4-
+          path: *.y4m
+          key: videos5-${{ env.HASH }}
       
       - run: "[ -d videos ] && echo ::set-env name=exist::True"
 
