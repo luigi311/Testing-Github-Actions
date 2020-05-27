@@ -142,7 +142,7 @@ jobs:
           for url in raw.githubusercontent.com/OpenVisualCloud/SVT-AV1-Resources/master randomderp.com; do
             curl -Lo video.tar.gz https://$url/video.tar.gz && break
           done
-          tar -xf videos/video.tar.gz
+          tar -xf video.tar.gz
         
       - name: Hash video.tar.gz
         run: |
