@@ -145,10 +145,11 @@ jobs:
           tar -xf video.tar.gz
         
       - name: Hash video.tar.gz
+        id: hash
         run: |
-          echo "::set-env name=HASH::${{ hashFiles('videos/video.tar.gz') }}"
-          echo $HASH
-     
+          echo "::set-output name=HASH::$(sha256sum video.tar.gz)"
+         
+      - run: echo ${{ steps.hash.outputs.HASH }}
       - name: Cache videos
         uses: actions/cache@v2
         with:
