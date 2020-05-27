@@ -147,13 +147,13 @@ jobs:
       - name: Hash video.tar.gz
         run: |
           echo "::set-env name=HASH::${{ hashFiles('videos/video.tar.gz') }}"
-          echo ${{ env.HASH }}
+          echo $HASH
      
       - name: Cache videos
         uses: actions/cache@v2
         with:
           path: "*.y4m"
-          key: videos5-${{ env.HASH }}
+          key: videos5-$HASH
   
   test-videos:
     runs-on: ubuntu-latest
@@ -162,13 +162,13 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
-      
+      - run: echo $HASH
       - name: Cache videos
         id: cache-videos
         uses: actions/cache@v2
         with:
           path: "*.y4m"
-          key: videos5-${{ env.HASH }}
+          key: videos5-$HASH
       
       - run: "[ -d videos ] && echo ::set-env name=exist::True"
 
