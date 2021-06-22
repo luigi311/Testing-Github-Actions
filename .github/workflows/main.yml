@@ -77,3 +77,13 @@ jobs:
         with:
           name: value
           path: ./value.tar.gz
+
+  operators:
+    runs-on: ubuntu-18.04
+   
+    steps:
+      - name: Echo true or false
+        run: echo ${{ true || false }}
+
+      - name: Echo false or true
+        run: echo ${{ false || true }}
